@@ -1,0 +1,12 @@
+#!/bin/bash
+
+./strip-image.sh  \
+  -v \
+  -i mariadb:10   \
+  -p mariadb-client \
+  -p mysql-client \
+  -p net-tools \
+  -p ip-route2 \
+  -d Dockerfile \
+  -t local/testdb:0.3 \
+

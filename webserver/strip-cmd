@@ -1,0 +1,36 @@
+  #!/bin/bash
+  sudo rm -rf $PWD/tmp-build-base-*
+
+ ./strip-image.sh  \
+  -v \
+  -i u2229437/web_strip_base  \
+  -p epel-release \
+  -p nginx \
+	-p php \
+	-p php-mysqlnd \
+	-p php-fpm \
+  -p php-pdo \
+  -f /usr/share/nginx/html \
+  -f /etc/nginx/nginx.conf \
+  -f /etc/php.ini \
+  -f /etc/php-fpm.d/www.conf \
+  -f /etc/nginx/conf.d/php-fpm.conf \
+  -f /docker-entrypoint.sh \
+  -f /etc/passwd \
+  -f /etc/group \
+  -f '/lib/*/libnss*' \
+  -f /bin/ls \
+  -f /bin/cat \
+  -f /bin/bash \
+  -f /bin/mkdir \
+  -f /bin/ps \
+  -f /usr/bin/chmod \
+  -f /usr/bin/chown \
+  -f /var/run \
+  -f /var/log/nginx \
+  -f /var/log/apache \
+  -f /var/log/php-fpm \
+  -f /usr/lib64/ \
+  -f /var/lib/nginx/tmp \
+  -d Dockerfile \
+  -t u2229437/web_stripped

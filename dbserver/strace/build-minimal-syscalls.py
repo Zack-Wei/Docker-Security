@@ -28,14 +28,14 @@ def kill_and_rm():
     pass
 
 def insert_sql_config():
-    time.sleep(10)
+    time.sleep(8)
     cmd = "docker exec -i u2229437_db_strace mysql -uroot -pCorrectHorseBatteryStaple < ../sqlconfig/csvs23db.sql"
     proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    timeout = 2
+    timeout = 1
     start_time = time.time()
     while proc.poll() is None:
-        time.sleep(1)
+        time.sleep(0.1)
         if time.time() - start_time > timeout:
             proc.terminate()
             print("External program timed out, starting program A...")

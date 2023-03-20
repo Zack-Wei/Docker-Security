@@ -38,9 +38,10 @@ def insert_sql_config():
         time.sleep(0.1)
         if time.time() - start_time > timeout:
             proc.terminate()
-            print("External program timed out, starting program A...")
-            
+            print("sql insert timed out.")
             return
+    print("sql insert succeed")
+    return
 
 def run_docker_with_syscalls(syscalls_json):
     cmd = f"docker run --security-opt seccomp:{syscalls_json} \
@@ -49,7 +50,7 @@ def run_docker_with_syscalls(syscalls_json):
         --name u2229437_db_strace u2229437/db_strip_base "
 
     ret = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    print("ret1:", ret.returncode)
+    print("run docker with returncode(0 means succeed):", ret.returncode)
 
     if ret.returncode == 0:
         insert_sql_config()
@@ -60,7 +61,6 @@ def run_docker_with_syscalls(syscalls_json):
 def unique_data():
     unique_id = uuid.uuid4()
     unique_id_hex = unique_id.hex
-    print(unique_id_hex)
     return unique_id_hex
 
 def test_case_1(fullname, suggestion):
@@ -86,6 +86,17 @@ def test_case_2(fullname, suggestion):
         return "fail db insert "
     except requests.exceptions.RequestException as e:
         return e
+
+def test_case():
+        tmp_fullname = unique_data()
+        tmp_suggestion = unique_data()
+        print("Name:", tmp_fullname, " Suggestion:", tmp_suggestion)
+        #test case
+        result1=test_case_1(tmp_fullname, tmp_suggestion)
+        result2=test_case_2(tmp_fullname, tmp_suggestion)
+        print("POST return:", result1)
+        print("GET return:", result2)
+        return result1, result2
 
 def half_the_syscalls(original_list):
     with open(original_list, "r") as f:
@@ -141,7 +152,7 @@ def get_minimal_syscalls():
 
     for s in syscalls:
         s = s.strip()
-        print(s)
+        print(s, "Deleted")
         # # Remove the current syscall from the JSON file
         with open("moby-default.json", "r") as f:
             tmp_syscalls = json.load(f)
@@ -150,16 +161,10 @@ def get_minimal_syscalls():
             f.write(json.dumps(tmp_syscalls))  
         #kill and rm exit docker before new run
         kill_and_rm()
-
+        #run docker
         ret=run_docker_with_syscalls("tmp.json")
-
-        tmp_fullname = unique_data()
-        tmp_suggestion = unique_data()
         #test case
-        result1=test_case_1(tmp_fullname, tmp_suggestion)
-        result2=test_case_2(tmp_fullname, tmp_suggestion)
-        print(result1)
-        print(result2)
+        result1, result2 = test_case()
         # If the container fails to start, log the current syscall to a file
         if ret != 0 or result1 != 200 or result2 != 200:
             with open("minimal-syscalls", "a") as f:
@@ -170,7 +175,8 @@ def get_minimal_syscalls():
 
 
 #create_minimal_json()
-#run_docker_with_syscalls("tmp-dich.json")
+run_docker_with_syscalls("moby-default.json")
+test_case()
 #dichotomy_to_get_mini_syscalls()
-get_minimal_syscalls()
+#get_minimal_syscalls()
 

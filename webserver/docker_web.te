@@ -1,0 +1,52 @@
+policy_module(docker_web,2.1)
+# pn: 2022-01-26: updated with dontaudit additions
+# derived from:
+#   Original material from James Dorgan
+#   https://opensource.com/business/15/3/docker-security-tuning
+#   https://opensource.com/article/18/2/understanding-selinux-labels-container-runtimes
+
+# This template interface creates the docker_web_t type as a
+# type which can be run as a docker container. To see what it does, look in 
+# /usr/share/selinux/devel/include/contrib/virt.if
+virt_sandbox_domain_template(docker_web);
+
+
+################# put audit2allow rules in here ##############
+require {
+        type docker_web_t;
+        type node_t;
+        type http_port_t;
+        class capability { chown net_bind_service setgid setuid };
+        class tcp_socket { bind create listen setopt accept read connect getattr write getopt };
+        type mysqld_port_t;
+}
+#============= docker_web_t ==============
+allow docker_web_t node_t:tcp_socket node_bind;
+allow docker_web_t http_port_t:tcp_socket name_bind;
+allow docker_web_t self:capability { chown net_bind_service setgid setuid };
+allow docker_web_t self:tcp_socket { bind create listen setopt accept read connect getattr write getopt };
+allow docker_web_t mysqld_port_t:tcp_socket name_connect;
+
+################# end audit2allow additions ##################
+
+# Permissive domains allow processes to not be blocked by SELinux
+# Remove this rule, when you are confident in the policy.
+##################################################################################### 
+# permissive docker_web_t;
+
+#   # compile this textual file into an executable policy (.pp) file
+#   sudo make -f /usr/share/selinux/devel/Makefile docker_web.pp
+
+#   # insert the policy file into the active kernel policies (ie so it can be used)
+#   sudo semodule -i docker_web.pp
+
+#   # confirm it is present (and check the version number)
+#   sudo semodule -l | grep docker_web
+
+#   # invoke the container with the policy applied
+# docker run --security-opt label:type:docker_web_t -d --net u1234567/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 -p 80:80 --name u1234567_csvs2023-web_c u1234567/csvs2023-web_i
+
+#   sudo ausearch -m avc --start recent | audit2allow -r
+
+#   sudo setenforce 1; getenforce
+#   docker info | grep -A5 Security

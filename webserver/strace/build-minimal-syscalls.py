@@ -96,7 +96,7 @@ def get_minimal_syscalls():
     return
 
 def run_docker_with_minsyscalls():
-    cmd="docker run --security-opt seccomp:minimal-syscalls.json \
+    cmd="docker run --security-opt seccomp:moby-default.json \
         -d --net u1234567/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test \
         --add-host db.cyber23.test:203.0.113.201 -p 80:80 \
         --name u2229437_web_strace \

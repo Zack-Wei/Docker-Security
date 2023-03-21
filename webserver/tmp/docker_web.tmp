@@ -1043,7 +1043,7 @@
 #line 1
 	
 #line 1
-		module docker_web 2.1;
+		module docker_web 2.2;
 #line 1
 
 #line 1
@@ -3648,6 +3648,7 @@ require {
         class capability { chown net_bind_service setgid setuid };
         class tcp_socket { bind create listen setopt accept read connect getattr write getopt };
         type mysqld_port_t;
+        type user_home_t;
 }
 #============= docker_web_t ==============
 allow docker_web_t node_t:tcp_socket node_bind;
@@ -3655,6 +3656,7 @@ allow docker_web_t http_port_t:tcp_socket name_bind;
 allow docker_web_t self:capability { chown net_bind_service setgid setuid };
 allow docker_web_t self:tcp_socket { bind create listen setopt accept read connect getattr write getopt };
 allow docker_web_t mysqld_port_t:tcp_socket name_connect;
+allow docker_web_t user_home_t:file { open read };
 
 ################# end audit2allow additions ##################
 

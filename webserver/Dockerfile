@@ -2,13 +2,14 @@
 
 FROM centos:7
 
-RUN 	yum install -y epel-release -y && \
+RUN 	yum install epel-release -y && \
 	yum update -y && \
 	yum install -y \
 	nginx \
 	php \
 	php-mysqlnd \
 	php-fpm 
+	
 
 COPY webfiles/ /usr/share/nginx/html
 
@@ -25,4 +26,3 @@ RUN chmod +x /docker-entrypoint.sh && \
 EXPOSE 80
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-

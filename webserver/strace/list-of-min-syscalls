@@ -22,6 +22,7 @@ fstatfs
 futex
 getdents
 getdents64
+geteuid
 getpgrp
 getppid
 getrlimit

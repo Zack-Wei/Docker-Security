@@ -47,9 +47,49 @@ def test_case_2(fullname, suggestion):
     except requests.exceptions.RequestException as e:
         return e
 
+def test_case_3():
+    #This case test 404
+    url = "http://localhost/wrong_dic"
+    try:
+        response = requests.get(url, timeout=2)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        flag = str(e)[:3]
+        if flag == "404":
+            return 404
+        else:
+            return e
+
+def test_case():
+    tmp_fullname = unique_data()
+    tmp_suggestion = unique_data()
+    result1=test_case_1(tmp_fullname, tmp_suggestion)
+    result2=test_case_2(tmp_fullname, tmp_suggestion)
+    result3=test_case_3()
+    print(result1)
+    print(result2)
+    print(result3)
+    return result1, result2, result3
+
+def run_docker_with_syscalls(sys_json):
+
+    cmd=f"docker run --security-opt seccomp:{sys_json} \
+        --security-opt label:type:docker_web_t --cap-drop=ALL \
+        --cap-add CAP_CHOWN \
+        --cap-add CAP_SETGID \
+        --cap-add CAP_SETUID \
+        --cap-add CAP_NET_BIND_SERVICE \
+        --cap-add CAP_SYS_CHROOT \
+        -d --net u2229437/csvs2023_n --ip 203.0.113.200 \
+        --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 \
+        -p 80:80 --name u2229437_web u2229437/web_base "
+
+    result = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return result.returncode
+
+
 def get_minimal_syscalls():
-    #call build-minimal-syscalls script
-    #result=subprocess.call("sh $PWD/build-minimal-sycalls.sh",shell=True)
+    #call build-minimal-syscalls
     # Read the list of syscalls from the file
     with open("./moby-syscalls", "r") as f:
         syscalls = f.readlines()
@@ -71,39 +111,22 @@ def get_minimal_syscalls():
         subprocess.call("sh $PWD/minimal-sycalls-helper.sh",shell=True)
 
         # Run a Docker container with the updated Seccomp configuration
-        cmd = "docker run --security-opt seccomp:tmp.json \
-            -d --net u1234567/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test \
-            --add-host db.cyber23.test:203.0.113.201 -p 80:80 \
-            --name u2229437_web_strace \
-            u2229437/web_stripped "
-        ret=os.system(cmd)
-        time.sleep(3)
+        ret=run_docker_with_syscalls("tmp.json")
+        time.sleep(2)
+        print(ret)
 
-        tmp_fullname = unique_data()
-        tmp_suggestion = unique_data()
-        #test case 1
-        result1=test_case_1(tmp_fullname, tmp_suggestion)
-        #test case 2
-        result2=test_case_2(tmp_fullname, tmp_suggestion)
-        print(result1)
-        print(result2)
+        #test case
+        result1, result2, result3 = test_case()
+
         # If the container fails to start, log the current syscall to a file
-        if ret != 0 or result1 != 200 or result2 != 200:
+        if ret != 0 or result1 != 200 or result2 != 200 or result3 != 404:
             with open("list-of-min-syscalls", "a") as f:
                 f.write(f"{s}\n")
     #creat the minimal-syscalls-json
     create_minimal_json()
     return
 
-def run_docker_with_minsyscalls():
-    cmd="docker run --security-opt seccomp:moby-default.json \
-        -d --net u1234567/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test \
-        --add-host db.cyber23.test:203.0.113.201 -p 80:80 \
-        --name u2229437_web_strace \
-        u2229437/web_stripped"
-    result = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    print(result.stdout.decode('utf-8')) 
-
 #create_minimal_json()
-run_docker_with_minsyscalls()
+run_docker_with_syscalls("moby-default.json")
+#test_case()
 #get_minimal_syscalls()

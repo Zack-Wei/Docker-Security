@@ -1,6 +1,7 @@
 
-#DB
-docker run --security-opt label:type:docker_db_t --cap-drop=ALL \
+# #DB
+docker run --security-opt seccomp:dbserver/strace/minimal-syscalls.json \
+    --security-opt label:type:docker_db_t --cap-drop=ALL \
     -d --net u2229437/csvs2023_n --ip 203.0.113.201 \
     --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" \
     -e MYSQL_DATABASE="csvs23db" --name u2229437_db u2229437/db_base 
@@ -9,8 +10,9 @@ sleep 12
 
 docker exec -i u2229437_db mysql -uroot -pCorrectHorseBatteryStaple < dbserver/sqlconfig/csvs23db.sql
 
-# WEB
-docker run --security-opt label:type:docker_web_t --cap-drop=ALL \
+# #WEB
+docker run  --security-opt seccomp:webserver/strace/minimal-syscalls.json \
+    --security-opt label:type:docker_web_t --cap-drop=ALL \
     --cap-add CAP_CHOWN \
     --cap-add CAP_NET_BIND_SERVICE \
     --cap-add CAP_SETGID \

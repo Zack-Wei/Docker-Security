@@ -28,8 +28,8 @@ def kill_and_rm():
     pass
 
 def insert_sql_config():
-    time.sleep(8)
-    cmd = "docker exec -i u2229437_db_strace mysql -uroot -pCorrectHorseBatteryStaple < ../sqlconfig/csvs23db.sql"
+    time.sleep(12)
+    cmd = "docker exec -i u2229437_db mysql -uroot -pCorrectHorseBatteryStaple < ../sqlconfig/csvs23db.sql"
     proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     timeout = 1
@@ -44,10 +44,12 @@ def insert_sql_config():
     return
 
 def run_docker_with_syscalls(syscalls_json):
-    cmd = f"docker run --security-opt seccomp:{syscalls_json} \
-        -d --net u1234567/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test \
-        -e MYSQL_ROOT_PASSWORD=\"CorrectHorseBatteryStaple\" -e MYSQL_DATABASE=\"csvs23db\" \
-        --name u2229437_db_strace u2229437/db_strip_base "
+
+    cmd = f"docker run --security-opt label:type:docker_db_t --cap-drop=ALL \
+    --security-opt seccomp:{syscalls_json} \
+    -d --net u2229437/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test \
+    -e MYSQL_ROOT_PASSWORD=\"CorrectHorseBatteryStaple\" -e MYSQL_DATABASE=\"csvs23db\" \
+    --name u2229437_db u2229437/db_base "
 
     ret = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     print("run docker with returncode(0 means succeed):", ret.returncode)
@@ -152,7 +154,7 @@ def get_minimal_syscalls():
 
     for s in syscalls:
         s = s.strip()
-        print(s, "Deleted")
+        print(s, "Deleted =========================================================== ")
         # # Remove the current syscall from the JSON file
         with open("moby-default.json", "r") as f:
             tmp_syscalls = json.load(f)
@@ -175,7 +177,7 @@ def get_minimal_syscalls():
 
 
 #create_minimal_json()
-run_docker_with_syscalls("moby-default.json")
+#run_docker_with_syscalls("minimal-syscalls.json")
 test_case()
 #dichotomy_to_get_mini_syscalls()
 #get_minimal_syscalls()

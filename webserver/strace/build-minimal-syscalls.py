@@ -20,7 +20,6 @@ def create_minimal_json():
 def unique_data():
     unique_id = uuid.uuid4()
     unique_id_hex = unique_id.hex
-    print(unique_id_hex)
     return unique_id_hex
 
 def test_case_1(fullname, suggestion):
@@ -63,6 +62,7 @@ def test_case_3():
 def test_case():
     tmp_fullname = unique_data()
     tmp_suggestion = unique_data()
+    print("Name:", tmp_fullname, " Suggestion:", tmp_suggestion)
     result1=test_case_1(tmp_fullname, tmp_suggestion)
     result2=test_case_2(tmp_fullname, tmp_suggestion)
     result3=test_case_3()
@@ -127,6 +127,6 @@ def get_minimal_syscalls():
     return
 
 #create_minimal_json()
-run_docker_with_syscalls("moby-default.json")
+#run_docker_with_syscalls("moby-default.json")
 #test_case()
-#get_minimal_syscalls()
+get_minimal_syscalls()

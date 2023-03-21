@@ -3,7 +3,7 @@
 
  ./strip-image.sh  \
   -v \
-  -i u2229437/web_strip_base  \
+  -i u2229437/web_base  \
   -p epel-release \
   -p nginx \
 	-p php \
@@ -24,8 +24,6 @@
   -f /bin/bash \
   -f /bin/mkdir \
   -f /bin/ps \
-  -f /usr/bin/chmod \
-  -f /usr/bin/chown \
   -f /var/run \
   -f /var/log/nginx \
   -f /var/log/apache \
@@ -34,3 +32,6 @@
   -f /var/lib/nginx/tmp \
   -d Dockerfile \
   -t u2229437/web_stripped
+
+#-f /usr/bin/chmod \
+#-f /usr/bin/chown \

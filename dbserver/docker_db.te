@@ -1,4 +1,4 @@
-policy_module(docker_db,0.8)
+policy_module(docker_db,0.9)
 # pn: 2022-01-26: updated with dontaudit additions
 # derived from:
 #   Original material from James Dorgan
@@ -17,25 +17,12 @@ require {
         type node_t;
         class tcp_socket { accept bind create getattr listen name_bind node_bind read setopt write };
         type mysqld_port_t;
-#        class netlink_route_socket { bind create getattr nlmsg_read read write };
-#        class capability { dac_override setgid setuid };
-#        class file { open read };
-#        class lnk_file read;
-#        class dir read;
-#        type sysfs_t;
-#        class udp_socket { connect create getattr ioctl };
 }
 
 #============= docker_db_t ==============
 allow docker_db_t node_t:tcp_socket node_bind;
 allow docker_db_t self:tcp_socket { accept bind create getattr listen read setopt write };
 allow docker_db_t mysqld_port_t:tcp_socket name_bind;
-#allow docker_db_t self:netlink_route_socket { bind create getattr nlmsg_read read write };
-#allow docker_db_t self:capability { dac_override setgid setuid };
-#allow docker_db_t sysfs_t:dir read;
-#allow docker_db_t sysfs_t:file { open read };
-#allow docker_db_t sysfs_t:lnk_file read;
-#allow docker_db_t self:udp_socket { connect create getattr ioctl };
 
 ################# end audit2allow additions ##################
 

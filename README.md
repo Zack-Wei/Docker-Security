@@ -4,6 +4,9 @@
 # This README file provides you with the commands to get the web application working in the most basic configuration.
 # in all the following, replace u1234567 with your specific university ID.
 
+# Updated by University of Warwick: Datong: Mar 2023 
+
+
 ####### Docker Network ############
 
 # So that our containers can talk to each other, we need to create a docker network:
@@ -59,4 +62,5 @@ docker run -d --net u1234567/csvs2023_n --ip 203.0.113.200 --hostname www.cyber2
 
 # NOTE: If you have issues getting the basic setup working, ask for help!
 
+# You can user script for quic start and test now!
 

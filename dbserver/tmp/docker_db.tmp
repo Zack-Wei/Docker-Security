@@ -1043,7 +1043,7 @@
 #line 1
 	
 #line 1
-		module docker_db 0.8;
+		module docker_db 0.9;
 #line 1
 
 #line 1
@@ -3646,25 +3646,12 @@ require {
         type node_t;
         class tcp_socket { accept bind create getattr listen name_bind node_bind read setopt write };
         type mysqld_port_t;
-#        class netlink_route_socket { bind create getattr nlmsg_read read write };
-#        class capability { dac_override setgid setuid };
-#        class file { open read };
-#        class lnk_file read;
-#        class dir read;
-#        type sysfs_t;
-#        class udp_socket { connect create getattr ioctl };
 }
 
 #============= docker_db_t ==============
 allow docker_db_t node_t:tcp_socket node_bind;
 allow docker_db_t self:tcp_socket { accept bind create getattr listen read setopt write };
 allow docker_db_t mysqld_port_t:tcp_socket name_bind;
-#allow docker_db_t self:netlink_route_socket { bind create getattr nlmsg_read read write };
-#allow docker_db_t self:capability { dac_override setgid setuid };
-#allow docker_db_t sysfs_t:dir read;
-#allow docker_db_t sysfs_t:file { open read };
-#allow docker_db_t sysfs_t:lnk_file read;
-#allow docker_db_t self:udp_socket { connect create getattr ioctl };
 
 ################# end audit2allow additions ##################
 
@@ -3683,8 +3670,8 @@ permissive docker_db_t;
 #   sudo semodule -l | grep docker_db
 
 #   # invoke the container with the policy applied
-# docker run --security-opt label:type:docker_db_t -d --net u1234567/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD=\"CorrectHorseBatteryStaple\" -e MYSQL_DATABASE=\"csvs23db\" --name u2229437_db_strace u2229437/db_strip_base
-#
+# docker run --rm -d --security-opt label:type:docker_db_t --net u1234567/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u1234567_csvs2023-db_c u1234567/csvs2023-db_i #
+# docker exec -i u1234567_csvs2023-db_c mysql -uroot -pCorrectHorseBatteryStaple < sqlconfig/csvs23db.sql
 
 #   sudo ausearch -m avc --start recent | audit2allow -r
 

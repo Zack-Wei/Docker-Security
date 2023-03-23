@@ -45,6 +45,7 @@ recvfrom
 rt_sigaction
 rt_sigprocmask
 rt_sigreturn
+rt_sigsuspend
 sendto
 setgid
 setgroups

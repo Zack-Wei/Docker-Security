@@ -22,16 +22,20 @@
   -f /bin/ls \
   -f /bin/cat \
   -f /bin/bash \
+  -f /bin/sh \
   -f /bin/mkdir \
   -f /bin/ps \
   -f /var/run \
   -f /var/log/nginx \
   -f /var/log/apache \
   -f /var/log/php-fpm \
-  -f /usr/lib64/ \
   -f /var/lib/nginx/tmp \
+  -f /usr/sbin \
+  -f /sbin \
+  -f /usr/lib64 \
+  -f /etc/selinux \
   -d Dockerfile \
-  -t u2229437/web_stripped
+  -t u2229437/web_stripped:1
 
 #-f /usr/bin/chmod \
 #-f /usr/bin/chown \

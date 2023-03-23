@@ -6,6 +6,7 @@
 
 # Updated by University of Warwick: Datong: Mar 2023 
 
+# You can use script for quic start and test now!
 
 ####### Docker Network ############
 
@@ -50,17 +51,11 @@ docker run -d --net u1234567/csvs2023_n --ip 203.0.113.200 --hostname www.cyber2
 
 
 strace:
-docker build . --tag local/webstrace
-/usr/bin/strace -ff -o /output/trace  -p $(pgrep -d',' -x strace)
 
 docker run -d --net u1234567/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 -p 80:80 --name u1234567_csvs2023-webstrace --cap-add=SYS_PTRACE -v $PWD/output_h:/output_web:rw local/webstrace
-
-
-/usr/bin/strace -ff -o /output/trace  -p $(pgrep -d',' -x strace)
 
 # You should now be able to browse to http://localhost/ to view the web application!
 
 # NOTE: If you have issues getting the basic setup working, ask for help!
 
-# You can user script for quic start and test now!
 

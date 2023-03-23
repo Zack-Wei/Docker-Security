@@ -1,8 +1,7 @@
-import json
-import subprocess
 import requests
 import time
 import uuid
+import threading
 
 def unique_data():
     unique_id = uuid.uuid4()
@@ -36,7 +35,6 @@ def test_case_2(fullname, suggestion):
 def test_case():
     tmp_fullname = unique_data()
     tmp_suggestion = unique_data()
-    print("Name:", tmp_fullname, " Suggestion:", tmp_suggestion)
     result1=test_case_1(tmp_fullname, tmp_suggestion)
     result2=test_case_2(tmp_fullname, tmp_suggestion)
     print(result1)
@@ -44,14 +42,26 @@ def test_case():
     return result1, result2
 
 
-for i in range(50):
-    result1, result2 = test_case()
-    time.sleep(0.1)
-    if result1 != 200 or result2 != 200:
-        print("Test Failed!!!")
+def make_request(num_request_per_thread):
+    for i in range(num_request_per_thread):
+        result1, result2 = test_case()
+        if result1 != 200 or result2 != 200:
+            print("Test Failed!!!")
+            break
 
-for i in range(1000):
-    result1, result2 = test_case()
-    if result1 != 200 or result2 != 200:
-        print("Test Failed!!!")
+threads = []
+num_threads = 10
+num_request_per_thread = 1000
+
+for i in range(num_threads):
+    t = threading.Thread(target=make_request, args=(num_request_per_thread,))
+    threads.append(t)
+    print(f"{i} times insert")
+
+for t in threads:
+    t.start()
+
+for t in threads:
+    t.join()
+
 

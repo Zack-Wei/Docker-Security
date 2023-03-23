@@ -59,6 +59,15 @@ def test_case_3():
         else:
             return e
 
+def test_case_4():
+    #This case aims to solve strange cpu usage
+    cmd = "docker stats --no-stream  u2229437_web | awk 'NR==2{print $3}'"
+    result = subprocess.check_output(cmd, shell=True).decode("utf-8").strip()
+    if float(result[:1]) > 0.8:
+        return 1
+    else:
+        return 0 
+
 def test_case():
     tmp_fullname = unique_data()
     tmp_suggestion = unique_data()
@@ -66,10 +75,12 @@ def test_case():
     result1=test_case_1(tmp_fullname, tmp_suggestion)
     result2=test_case_2(tmp_fullname, tmp_suggestion)
     result3=test_case_3()
+    result4=test_case_4()
     print(result1)
     print(result2)
     print(result3)
-    return result1, result2, result3
+    print(result4)
+    return result1, result2, result3, result4
 
 def run_docker_with_syscalls(sys_json):
 
@@ -79,7 +90,6 @@ def run_docker_with_syscalls(sys_json):
         --cap-add CAP_SETGID \
         --cap-add CAP_SETUID \
         --cap-add CAP_NET_BIND_SERVICE \
-        --cap-add CAP_SYS_CHROOT \
         -d --net u2229437/csvs2023_n --ip 203.0.113.200 \
         --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 \
         -p 80:80 --name u2229437_web u2229437/web_base "
@@ -116,10 +126,10 @@ def get_minimal_syscalls():
         print(ret)
 
         #test case
-        result1, result2, result3 = test_case()
+        result1, result2, result3, result4 = test_case()
 
         # If the container fails to start, log the current syscall to a file
-        if ret != 0 or result1 != 200 or result2 != 200 or result3 != 404:
+        if ret != 0 or result1 != 200 or result2 != 200 or result3 != 404 or result4 != 0:
             with open("list-of-min-syscalls", "a") as f:
                 f.write(f"{s}\n")
     #creat the minimal-syscalls-json
@@ -130,3 +140,4 @@ def get_minimal_syscalls():
 #run_docker_with_syscalls("moby-default.json")
 #test_case()
 get_minimal_syscalls()
+#test_case_4()

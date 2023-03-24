@@ -21,7 +21,7 @@
   },
   "source_image": {
     "identity": {
-      "id": "sha256:b9e18419b94ee611c6ab33040df717dc56bc148713431ab7a233e0c694367c99",
+      "id": "sha256:fc22b17eaaae2cd1a55dfda499a4ccac0faf85b40fa7969db55e9ad2d7a7956d",
       "tags": [
         "latest"
       ],
@@ -31,7 +31,7 @@
     },
     "size": 400483731,
     "size_human": "400 MB",
-    "create_time": "2023-03-18T17:35:53Z",
+    "create_time": "2023-03-24T20:50:56Z",
     "docker_version": "",
     "architecture": "amd64",
     "user": "mysql",
@@ -65,26 +65,26 @@
       "exe_path": ""
     }
   },
-  "minified_image_size": 193973991,
-  "minified_image_size_human": "194 MB",
+  "minified_image_size": 201058692,
+  "minified_image_size_human": "201 MB",
   "minified_image": "u2229437/db_slim:1",
   "minified_image_has_data": true,
-  "minified_by": 2.0646259270914316,
-  "artifact_location": "/tmp/slim-state/.slim-state/images/b9e18419b94ee611c6ab33040df717dc56bc148713431ab7a233e0c694367c99/artifacts",
+  "minified_by": 1.9918747457085815,
+  "artifact_location": "/tmp/slim-state/.slim-state/images/fc22b17eaaae2cd1a55dfda499a4ccac0faf85b40fa7969db55e9ad2d7a7956d/artifacts",
   "container_report_name": "creport.json",
   "seccomp_profile_name": "u2229437-db_base-seccomp.json",
   "apparmor_profile_name": "u2229437-db_base-apparmor-profile",
   "image_stack": [
     {
       "is_top_image": true,
-      "id": "sha256:b9e18419b94ee611c6ab33040df717dc56bc148713431ab7a233e0c694367c99",
+      "id": "sha256:fc22b17eaaae2cd1a55dfda499a4ccac0faf85b40fa7969db55e9ad2d7a7956d",
       "full_name": "u2229437/db_base:latest",
       "repo_name": "u2229437/db_base",
       "version_tag": "latest",
       "raw_tags": [
         "u2229437/db_base:latest"
       ],
-      "create_time": "2023-03-18T17:35:53Z",
+      "create_time": "2023-03-24T20:50:56Z",
       "new_size": 400483731,
       "new_size_human": "400 MB",
       "instructions": [
@@ -473,7 +473,7 @@
         },
         {
           "type": "COPY",
-          "time": "2023-03-18T17:35:53Z",
+          "time": "2023-03-24T20:50:56Z",
           "is_nop": false,
           "local_image_exists": false,
           "layer_index": 0,
@@ -484,12 +484,12 @@
           "command_all": "COPY configfiles/mysqld.cnf /mysql/mysql.conf.d/mysqld.cnf",
           "comment": "buildkit.dockerfile.v0",
           "is_buildkit_instruction": true,
-          "inst_set_time_bucket": "2023-03-18T17:30:00Z",
+          "inst_set_time_bucket": "2023-03-24T20:45:00Z",
           "inst_set_time_index": 3
         },
         {
           "type": "USER",
-          "time": "2023-03-18T17:35:53Z",
+          "time": "2023-03-24T20:50:56Z",
           "is_nop": false,
           "local_image_exists": false,
           "layer_index": 0,
@@ -499,12 +499,12 @@
           "command_all": "USER mysql",
           "comment": "buildkit.dockerfile.v0",
           "is_buildkit_instruction": true,
-          "inst_set_time_bucket": "2023-03-18T17:30:00Z",
+          "inst_set_time_bucket": "2023-03-24T20:45:00Z",
           "inst_set_time_index": 3
         },
         {
           "type": "EXPOSE",
-          "time": "2023-03-18T17:35:53Z",
+          "time": "2023-03-24T20:50:56Z",
           "is_last_instruction": true,
           "is_nop": false,
           "local_image_exists": true,
@@ -518,7 +518,7 @@
             "u2229437/db_base:latest"
           ],
           "is_buildkit_instruction": true,
-          "inst_set_time_bucket": "2023-03-18T17:30:00Z",
+          "inst_set_time_bucket": "2023-03-24T20:45:00Z",
           "inst_set_time_index": 3
         }
       ]

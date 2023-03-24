@@ -20,6 +20,8 @@ docker run --cpus=1 --memory=128m --pids-limit=25 --device-read-bps=/dev/sda:10m
     --cap-drop=ALL \
     --cap-add CAP_CHOWN \
     --cap-add CAP_NET_BIND_SERVICE \
+    --cap-add CAP_SETGID \
+    --cap-add CAP_SETUID \
     -d --net u2229437/csvs2023_n --ip 203.0.113.200 \
     --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 \
     -p 80:80 --name u2229437_web u2229437/web_slim:1
@@ -37,6 +39,3 @@ python3 service_test.py
 # Check Serurity Prolicy active or not 
 
 
-
-    # --cap-add CAP_SETGID \
-    # --cap-add CAP_SETUID \

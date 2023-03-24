@@ -44,7 +44,6 @@ def test_case():
 def make_request(num_request_per_thread):
     for i in range(num_request_per_thread):
         result1, result2 = test_case()
-        print("insert data:", i,)
         if result1 != 200 or result2 != 200:
             print("Test Failed!!!")
             break

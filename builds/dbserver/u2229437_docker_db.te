@@ -1,47 +1,47 @@
-policy_module(docker_db,0.9)
+policy_module(u2229437_docker_db,0.9)
 # pn: 2022-01-26: updated with dontaudit additions
 # derived from:
 #   Original material from James Dorgan
 #   https://opensource.com/business/15/3/docker-security-tuning
 #   https://opensource.com/article/18/2/understanding-selinux-labels-container-runtimes
 
-# This template interface creates the docker_db_t type as a
+# This template interface creates the u2229437_docker_db_t type as a
 # type which can be run as a docker container. To see what it does, look in 
 # /usr/share/selinux/devel/include/contrib/virt.if
-virt_sandbox_domain_template(docker_db);
+virt_sandbox_domain_template(u2229437_docker_db);
 
 
 ################# put audit2allow rules in here ##############
 require {
-        type docker_db_t;
+        type u2229437_docker_db_t;
         type node_t;
         class tcp_socket { accept bind create getattr listen name_bind node_bind read setopt write };
         type mysqld_port_t;
 }
 
-#============= docker_db_t ==============
-allow docker_db_t node_t:tcp_socket node_bind;
-allow docker_db_t self:tcp_socket { accept bind create getattr listen read setopt write };
-allow docker_db_t mysqld_port_t:tcp_socket name_bind;
+#============= u2229437_docker_db_t ==============
+allow u2229437_docker_db_t node_t:tcp_socket node_bind;
+allow u2229437_docker_db_t self:tcp_socket { accept bind create getattr listen read setopt write };
+allow u2229437_docker_db_t mysqld_port_t:tcp_socket name_bind;
 
 ################# end audit2allow additions ##################
 
 # Permissive domains allow processes to not be blocked by SELinux
 # Remove this rule, when you are confident in the policy.
 ##################################################################################### 
-permissive docker_db_t;
+permissive u2229437_docker_db_t;
 
 #   # compile this textual file into an executable policy (.pp) file
-#   sudo make -f /usr/share/selinux/devel/Makefile docker_db.pp
+#   sudo make -f /usr/share/selinux/devel/Makefile u2229437_docker_db.pp
 
 #   # insert the policy file into the active kernel policies (ie so it can be used)
-#   sudo semodule -i docker_db.pp
+#   sudo semodule -i u2229437_docker_db.pp
 
 #   # confirm it is present (and check the version number)
-#   sudo semodule -l | grep docker_db
+#   sudo semodule -l | grep u2229437_docker_db
 
 #   # invoke the container with the policy applied
-# docker run --rm -d --security-opt label:type:docker_db_t --net u1234567/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u1234567_csvs2023-db_c u1234567/csvs2023-db_i #
+# docker run --rm -d --security-opt label:type:u2229437_docker_db_t --net u1234567/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u1234567_csvs2023-db_c u1234567/csvs2023-db_i #
 # docker exec -i u1234567_csvs2023-db_c mysql -uroot -pCorrectHorseBatteryStaple < sqlconfig/csvs23db.sql
 
 #   sudo ausearch -m avc --start recent | audit2allow -r

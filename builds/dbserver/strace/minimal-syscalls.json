@@ -1,0 +1,129 @@
+{
+    "defaultAction": "SCMP_ACT_ERRNO",
+    "archMap": [
+        {
+            "architecture": "SCMP_ARCH_X86_64",
+            "subArchitectures": [
+                "SCMP_ARCH_X86",
+                "SCMP_ARCH_X32"
+            ]
+        },
+        {
+            "architecture": "SCMP_ARCH_AARCH64",
+            "subArchitectures": [
+                "SCMP_ARCH_ARM"
+            ]
+        },
+        {
+            "architecture": "SCMP_ARCH_MIPS64",
+            "subArchitectures": [
+                "SCMP_ARCH_MIPS",
+                "SCMP_ARCH_MIPS64N32"
+            ]
+        },
+        {
+            "architecture": "SCMP_ARCH_MIPS64N32",
+            "subArchitectures": [
+                "SCMP_ARCH_MIPS",
+                "SCMP_ARCH_MIPS64"
+            ]
+        },
+        {
+            "architecture": "SCMP_ARCH_MIPSEL64",
+            "subArchitectures": [
+                "SCMP_ARCH_MIPSEL",
+                "SCMP_ARCH_MIPSEL64N32"
+            ]
+        },
+        {
+            "architecture": "SCMP_ARCH_MIPSEL64N32",
+            "subArchitectures": [
+                "SCMP_ARCH_MIPSEL",
+                "SCMP_ARCH_MIPSEL64"
+            ]
+        },
+        {
+            "architecture": "SCMP_ARCH_S390X",
+            "subArchitectures": [
+                "SCMP_ARCH_S390"
+            ]
+        }
+    ],
+    "syscalls": [
+        {
+            "names": [
+                "accept4",
+                "access",
+                "arch_prctl",
+                "bind",
+                "capget",
+                "capset",
+                "chdir",
+                "clock_nanosleep",
+                "clone",
+                "close",
+                "connect",
+                "dup2",
+                "execve",
+                "exit",
+                "faccessat",
+                "fallocate",
+                "fcntl",
+                "fdatasync",
+                "fstat",
+                "fstatfs",
+                "ftruncate",
+                "futex",
+                "getcwd",
+                "getdents64",
+                "getpeername",
+                "getpgrp",
+                "getpid",
+                "getppid",
+                "kill",
+                "listen",
+                "lseek",
+                "mkdir",
+                "mmap",
+                "mprotect",
+                "munmap",
+                "name_to_handle_at",
+                "nanosleep",
+                "newfstatat",
+                "open",
+                "openat",
+                "pipe2",
+                "poll",
+                "prctl",
+                "pread64",
+                "pwrite64",
+                "read",
+                "readlink",
+                "recvfrom",
+                "rename",
+                "rt_sigaction",
+                "rt_sigprocmask",
+                "rt_sigreturn",
+                "rt_sigtimedwait",
+                "sendto",
+                "set_tid_address",
+                "setgid",
+                "setgroups",
+                "setsockopt",
+                "setuid",
+                "socket",
+                "tgkill",
+                "uname",
+                "unlink",
+                "vfork",
+                "wait4",
+                "write"
+            ],
+            "action": "SCMP_ACT_ALLOW",
+            "args": [],
+            "comment": "",
+            "includes": {},
+            "excludes": {}
+        }
+    ]
+}

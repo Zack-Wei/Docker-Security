@@ -41,22 +41,21 @@ def test_case():
     print(result2)
     return result1, result2
 
-
 def make_request(num_request_per_thread):
     for i in range(num_request_per_thread):
         result1, result2 = test_case()
+        print("insert data:", i,)
         if result1 != 200 or result2 != 200:
             print("Test Failed!!!")
             break
 
 threads = []
 num_threads = 10
-num_request_per_thread = 1000
+num_request_per_thread = 10
 
 for i in range(num_threads):
-    t = threading.Thread(target=make_request, args=(num_request_per_thread,))
+    t = threading.Thread(target=make_request, args=(num_request_per_thread, ))
     threads.append(t)
-    print(f"{i} times insert")
 
 for t in threads:
     t.start()

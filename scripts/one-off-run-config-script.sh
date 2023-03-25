@@ -12,6 +12,7 @@ docker network create --subnet=203.0.113.0/24 u2229437/csvs2023_n
 cd dbserver
 # compile this textual file into an executable policy (.pp) file
 sudo make -f /usr/share/selinux/devel/Makefile u2229437_docker_db.pp
+sleep 1
 # insert the policy file into the active kernel policies (ie so it can be used)
 sudo semodule -i u2229437_docker_db.pp
 cd ..
@@ -19,6 +20,7 @@ cd ..
 cd webserver
 # compile this textual file into an executable policy (.pp) file
 sudo make -f /usr/share/selinux/devel/Makefile u2229437_docker_web.pp
+sleep 1
 # insert the policy file into the active kernel policies (ie so it can be used)
 sudo semodule -i u2229437_docker_web.pp
 cd ..
@@ -51,10 +53,12 @@ python3 service_test.py
 
 ####### Security Test for Base Containers ############
 # Check Serurity Prolicy active or not 
-
+cd $SCRIPTDIR
+python3 security_test.py
 
 
 ####### Run the slim containers ############
 cd $SCRIPTDIR
 ./rm_all_docker.sh
+sleep 1
 ./repeated-run-script.sh

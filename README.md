@@ -1,12 +1,8 @@
-# University of Warwick: Peter Norris: Feb 2023
+# University of Warwick: Zack-Wei: March 2023
 
 # You will find two folders in this archive, one for a database container and one for a webserver container.
 # This README file provides you with the commands to get the web application working in the most basic configuration.
-# in all the following, replace u1234567 with your specific university ID.
-
-# Updated by University of Warwick: Datong: Mar 2023 
-
-# You can use script for quic start and test now!
+# You can alos use script for quick start and test.
 
 ####### Docker Network ############
 

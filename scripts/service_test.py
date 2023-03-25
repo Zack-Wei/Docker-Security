@@ -47,6 +47,8 @@ def make_request(num_request_per_thread):
         if result1 != 200 or result2 != 200:
             print("Test Failed!!!")
             break
+        else:
+            print("Test OK!")
 
 threads = []
 num_threads = 10

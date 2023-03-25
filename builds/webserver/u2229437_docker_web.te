@@ -1,4 +1,4 @@
-policy_module(u2229437_docker_web,2.3)
+policy_module(u2229437_docker_web,2.4)
 # pn: 2022-01-26: updated with dontaudit additions
 # derived from:
 #   Original material from James Dorgan

@@ -1043,7 +1043,7 @@
 #line 1
 	
 #line 1
-		module u2229437_docker_db 0.9;
+		module u2229437_docker_db 1.9;
 #line 1
 
 #line 1
@@ -3658,7 +3658,7 @@ allow u2229437_docker_db_t mysqld_port_t:tcp_socket name_bind;
 # Permissive domains allow processes to not be blocked by SELinux
 # Remove this rule, when you are confident in the policy.
 ##################################################################################### 
-permissive u2229437_docker_db_t;
+# permissive u2229437_docker_db_t;
 
 #   # compile this textual file into an executable policy (.pp) file
 #   sudo make -f /usr/share/selinux/devel/Makefile u2229437_docker_db.pp

@@ -45,11 +45,13 @@ def make_request(num_request_per_thread):
     for i in range(num_request_per_thread):
         result1, result2 = test_case()
         if result1 != 200 or result2 != 200:
-            print("Test Failed!!!")
+            print("POST/GET Failed!!!")
             break
         else:
-            print("Test OK!")
+            print("POST/GET OK!")
 
+
+# # Give a simple test, insert 100 messages, 10 message at the same time, cycle 10 times
 threads = []
 num_threads = 10
 num_request_per_thread = 10

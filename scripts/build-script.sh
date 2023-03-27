@@ -32,8 +32,9 @@ docker build  --no-cache --tag u2229437/web_base .
 
 
 # ####### Docker Slim ############
-curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -
-sleep 2
+#curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -
+#sleep 2
+# web
 slim build --target u2229437/web_base:latest --tag u2229437/web_slim:1 \
     --include-path "/usr/share/nginx/html" \
     --include-path "/etc/nginx/nginx.conf" \
@@ -44,18 +45,21 @@ slim build --target u2229437/web_base:latest --tag u2229437/web_slim:1 \
     --include-path "/var/log/nginx" \
     --include-path "/var/log/apache" \
     --include-path "/var/log/php-fpm" \
-    --include-path "/var/lib/nginx/tmp"
+    --include-path "/var/lib/nginx/tmp" \
+
 echo "Finished Slim Web"
 
+# db
 slim build --target u2229437/db_base:latest --tag u2229437/db_slim:1 \
-    --http-probe=false \
     --include-path "/mysql/mysql.conf.d/mysqld.cnf" \
     --include-path "/etc/mysql/conf.d/" \
-    --include-path "/run/mysqld/"
-    # --env "MYSQL_ROOT_PASSWORD=\"CorrectHorseBatteryStaple\"" \
-    # --env "MYSQL_DATABASE=\"csvs23db\"" \
+    --include-path "/run/mysqld/" \
+    --include-path "/docker-entrypoint-initdb.d" \
+    --include-path "/usr/bin/ls" \
+    --include-path "/var/lib/mysql" \
+    # --env MYSQL_ROOT_PASSWORD=\"CorrectHorseBatteryStaple\" \
+    # --env MYSQL_DATABASE=\"csvs23db\"
 
 echo "Finished Slim DB"
-
 
 

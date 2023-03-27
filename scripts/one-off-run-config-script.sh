@@ -30,12 +30,11 @@ cd ..
 # Give a storage for database server
 docker volume create db_mysql
 
-####### Run the Unstrip containers ############
+####### Run the containers ############
 # Run the containers
 cd $SCRIPTDIR
-./run-unstrip-container-script.sh
+./repeated-run-script.sh
 
-####### Mysql Init ############
 # Prepare the database
 # Because of the persistence volume, this cmd just need run once
 sleep 20
@@ -45,20 +44,13 @@ cd $SCRIPTDIR
 sleep 1
 
 
-####### Service Test for Base Containers ############
-# Give a test, insert 100 messages
-cd $SCRIPTDIR
-python3 service_test.py
+####### Give a test ############
+./testcase.sh
 
 
-####### Security Test for Base Containers ############
-# Check Serurity Prolicy active or not 
-cd $SCRIPTDIR
-python3 security_test.py
 
-
-####### Run the slim containers ############
-cd $SCRIPTDIR
-./rm_all_docker.sh
-sleep 1
-./repeated-run-script.sh
+# ####### Run the slim containers ############
+# cd $SCRIPTDIR
+# ./rm_all_docker.sh
+# sleep 1
+# ./run-striped-container-script.sh
